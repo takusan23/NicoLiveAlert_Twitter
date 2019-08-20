@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="jp">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>ニコ生アラート（青鳥）</title>
+
+    <!-- マテリアルデザイン -->
+    <!--Import Google Icon Font-->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <!--Import materialize.css-->
+    <link type="text/css" rel="stylesheet" href="css/materialize.min.css" media="screen,projection" />
+
+    <!--Let browser know website is optimized for mobile-->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+
+</head>
+
+<body style="background-color:#e1f5fe">
+
+    <!--JavaScript at end of body for optimized loading-->
+    <script type="text/javascript" src="js/materialize.min.js"></script>
+
+
+    <nav>
+        <div class="nav-wrapper light-blue darken-3">
+            <a href="" class="brand-logo left">アカウント追加</a>
+        </div>
+    </nav>
+
+    <div style="padding: 20px" class="row">
+        <div class="input-field col s12">
+            <input id="id" type="text" class="validate">
+            <label for="id">TwitterのID</label>
+        </div>
+    </div>
+    <div class="center">
+        <a class="waves-effect grey lighten-1 accent-1 btn" onclick="closeWindow()"><i
+                class="material-icons left">close</i>閉じる</a>
+        <a class="waves-effect  light-blue accent-4 accent-1 btn" onclick="addAccount()"><i
+                class="material-icons left">add</i>追加</a>
+    </div>
+
+</body>
+
+<script>
+
+    const dialog = require('electron').remote.dialog
+
+    function closeWindow() {
+        //IPC通信？でmain.jsへじゃんぷ
+        const { ipcRenderer } = require('electron')
+        ipcRenderer.send('message', 'add_account_close')
+    }
+    function addAccount() {
+        var twitter = require('twitter')
+        //アカウントリスト取得
+        let accountArray = new Array()
+        let accountNameArray = new Array()
+        if (localStorage.getItem('account_list') != null) {
+            //読み込む
+            const accountList = localStorage.getItem('account_list')
+            let jsonArray = JSON.parse(accountList)
+            //配列に保存
+            for (var i = 0; i < jsonArray.length; i++) {
+                accountArray.push(jsonArray[i])
+            }
+        }
+        if (localStorage.getItem('account_name_list') != null) {
+            //読み込む
+            const accountList = localStorage.getItem('account_name_list')
+            let jsonArray = JSON.parse(accountList)
+            //配列に保存
+            for (var i = 0; i < jsonArray.length; i++) {
+                accountNameArray.push(jsonArray[i])
+            }
+        }
+
+        //アカウントID取得
+        //TwitterAPI叩く
+        var client = new twitter({
+            consumer_key: localStorage.getItem('consumer_key'),
+            consumer_secret: localStorage.getItem('consumer_secret'),
+            access_token_key: localStorage.getItem('accesstoken_key'),
+            access_token_secret: localStorage.getItem('accesstoken_secret')
+        })
+        //アカウント情報取得
+        client.get('users/show', { screen_name: document.getElementById('id').value }, function (error, tweets, response) {
+            if (error) {
+                //console.log(tweets)
+                //エラー
+                dialog.showErrorBox('API取得エラー', 'API取得で問題が発生しました。');
+                //閉じる
+                closeWindow()
+            } else {
+                //ID取得        
+                const id = tweets.id_str
+                const display_name = tweets.name
+                //保存
+                accountArray.push(id)
+                accountNameArray.push(display_name)
+                localStorage.setItem('account_list', JSON.stringify(accountArray))
+                localStorage.setItem('account_name_list', JSON.stringify(accountNameArray))
+                //閉じる
+                closeWindow()
+            }
+        });
+
+    }
+</script>
+
+</html>
