@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="jp">
+<html lang="jp" style="height: 100%">
 
 <head>
     <meta charset="UTF-8">
@@ -19,7 +19,7 @@
 
 </head>
 
-<body>
+<body style="height: 100%">
 
     <!--JavaScript at end of body for optimized loading-->
     <script type="text/javascript" src="js/materialize.min.js"></script>
@@ -37,9 +37,30 @@
     </nav>
 
     <!-- Card -->
-    <div id="account_list" style="padding: 20px">
+    <table style="table-layout: fixed;height: 85%" class="striped centered">
+        <tr>
+            <th>
+                <h6>　登録アカウント</h6>
+            </th>
+            <th>
+                <h6>　通知履歴</h6>
+            </th>
+        </tr>
+        <tr style="height: 100%">
+            <th>
+                <div id="account_list" style="padding: 20px;overflow:auto; height: 100%;">
 
-    </div>
+                </div>
+            </th>
+            <th>
+                <div id="notification_list" style="padding: 20px;overflow:auto; height: 100%;">
+
+                </div>
+            </th>
+        </tr>
+    </table>
+
+
 
 </body>
 

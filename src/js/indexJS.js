@@ -28,7 +28,14 @@ function addAccountWindow() {
 
 //Window読み込み時
 window.onload = function () {
+    //読み込む
     loadAccountList()
+    //アカウント追加後更新するIPC通信を受け取る
+    const ipcMain = require("electron").remote.ipcMain;
+    ipcMain.on("loadAccount", (event, body) => {
+        document.getElementById('account_list').innerHTML = ``
+        loadAccountList()
+    })
 }
 
 function loadAccountList() {
@@ -186,6 +193,8 @@ function filterStream() {
                     body: tweet
                 })
 
+                //Card追加
+                addNotification(tweet)
             }
         }
     });
@@ -197,3 +206,19 @@ function filterStream() {
     });
 }
 
+function addNotification(title) {
+    const html = `
+    
+       <div class="col s12 m6">
+            <div class="card light-blue lighten-1">
+                <div class="card-content white-text">
+                    <span class="card-title">${title}</span>
+                    <p></p>
+                </div>
+            </div>
+        </div>
+
+    
+    `
+    document.getElementById('notification_list').innerHTML = `${html}${document.getElementById('notification_list').innerHTML}`
+}

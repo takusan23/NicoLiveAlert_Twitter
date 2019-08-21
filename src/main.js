@@ -115,7 +115,7 @@ function showModalWindow() {
             nodeIntegration: true
         }
     })
-    //subWindow.webContents.openDevTools()
+    subWindow.webContents.openDevTools()
     subWindow.loadURL(`file://${__dirname}/add_account.html`)
     subWindow.on('closed', function () {
         subWindow = null

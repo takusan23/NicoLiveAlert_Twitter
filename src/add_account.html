@@ -104,6 +104,9 @@
                 accountNameArray.push(display_name)
                 localStorage.setItem('account_list', JSON.stringify(accountArray))
                 localStorage.setItem('account_name_list', JSON.stringify(accountNameArray))
+                //IPC通信でアカウント一覧を更新する
+                const ipcRenderer = require("electron").ipcRenderer;
+                ipcRenderer.send("loadAccount", "ok");
                 //閉じる
                 closeWindow()
             }
