@@ -1,15 +1,16 @@
 {
   "name": "nicolivealert_twitter",
   "version": "1.0.0",
-  "description": "",
+  "description": "生主のツイッターから番組開始ツイートを取得して自動で番組に入場します。",
   "main": "./src/main.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "electron ."
   },
-  "author": "",
-  "license": "ISC",
+  "author": "takusan_23",
+  "license": "Apatch Licence 2.0",
   "devDependencies": {
     "electron": "^6.0.3",
+    "electron-build": "0.0.3",
     "twitter": "^1.7.1"
   },
   "dependencies": {
@@ -18,5 +19,13 @@
     "oauth-electron-twitter": "^1.0.48",
     "or": "^0.2.0",
     "yarn": "^1.17.3"
+  },
+  "build": {
+    "productName": "ニコ生アラート（青鳥）",
+    "appId": "io.github.takusan23.nicolivealerttwitter",
+    "win": {
+      "target": "portable",
+      "icon": "./src/images/icon.ico"
+    }
   }
 }

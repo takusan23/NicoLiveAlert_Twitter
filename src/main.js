@@ -14,6 +14,7 @@ function createWindow() {
     mainWindow = new BrowserWindow({
         width: 800,
         height: 600,
+        icon: __dirname + '/images/icon.png',
         webPreferences: {
             nodeIntegration: true
         }
@@ -108,6 +109,7 @@ function showModalWindow() {
     subWindow = new BrowserWindow({
         width: 400,
         height: 250,
+        icon: __dirname + '/images/icon.png',
         frame: false,
         parent: mainWindow,     //親ウィンドウのBrowserWindowオブジェクト
         modal: true,
@@ -115,7 +117,7 @@ function showModalWindow() {
             nodeIntegration: true
         }
     })
-    subWindow.webContents.openDevTools()
+    //subWindow.webContents.openDevTools()
     subWindow.loadURL(`file://${__dirname}/add_account.html`)
     subWindow.on('closed', function () {
         subWindow = null

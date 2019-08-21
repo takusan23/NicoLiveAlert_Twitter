@@ -5,6 +5,7 @@ function setAccountWindow() {
 
     const childWindow = new BrowserWindow({
         width: 800,
+        icon: __dirname + '/images/icon.png',
         height: 600,
         webPreferences: {
             nodeIntegration: true
