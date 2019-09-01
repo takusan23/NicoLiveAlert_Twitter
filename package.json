@@ -11,13 +11,19 @@
   "devDependencies": {
     "electron": "^6.0.3",
     "electron-build": "0.0.3",
-    "twitter": "^1.7.1"
+    "add": "^2.0.6",
+    "electron-oauth-twitter": "^1.2.0",
+    "oauth-electron-twitter": "^1.0.48",
+    "or": "^0.2.0",
+    "twitter": "^1.7.1",
+    "yarn": "^1.17.3"
   },
   "dependencies": {
     "add": "^2.0.6",
     "electron-oauth-twitter": "^1.2.0",
     "oauth-electron-twitter": "^1.0.48",
     "or": "^0.2.0",
+    "twitter": "^1.7.1",
     "yarn": "^1.17.3"
   },
   "build": {
@@ -25,7 +31,7 @@
     "appId": "io.github.takusan23.nicolivealerttwitter",
     "win": {
       "target": "portable",
-      "icon": "./src/images/icon.ico"
+      "icon": "./src/images/nicolivealert_twitter_icon_1.ico"
     }
   }
 }

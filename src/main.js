@@ -5,6 +5,7 @@ const { app, BrowserWindow, Menu, ipcMain, dialog } = require('electron')
 // be closed automatically when the JavaScript object is garbage collected.
 let mainWindow
 let subWindow   //アカウント追加モーダルウィンドウ
+let konoAppWindow
 
 let consumer_key = ""
 let consumer_secret = ""
@@ -85,34 +86,49 @@ app.on('activate', function () {
 
 //メニュー作成？
 function createMenu() {
-
+    //まずメニュー全消しする
+    Menu.setApplicationMenu(null)
     const menuArray = Menu.buildFromTemplate([
         {
-            label: "ファイル",
+            label: "ヘルプ",
             submenu: [
                 {
-                    label: "デバッグモード",    //名前
-                    accelerator: "F12", //ショートカットキー
+                    label: "このアプリについて",    //名前
                     click() {
-                        //デバッグモード起動
-                        mainWindow.webContents.openDevTools()
+                        showKonoApp()
                     }
                 }
             ]
         }
     ])
-    Menu.setApplicationMenu(menuArray)
+    //トップ画面にのみメニュー表示
+    mainWindow.setMenu(menuArray)
+}
+
+//このアプリについて
+function showKonoApp() {
+    konoAppWindow = new BrowserWindow({
+        width: 600,
+        height: 400,
+        icon: __dirname + '/images/large_icon.png',
+        webPreferences: {
+            nodeIntegration: true
+        }
+    })
+    //subWindow.webContents.openDevTools()
+    konoAppWindow.loadURL(`file://${__dirname}/konoapp.html`)
+    konoAppWindow.on('closed', function () {
+        konoAppWindow = null
+    })
 }
 
 //モーダルウィンドウ
 function showModalWindow() {
     subWindow = new BrowserWindow({
         width: 400,
-        height: 250,
-        icon: __dirname + '/images/icon.png',
-        frame: false,
+        height: 300,
+        icon: __dirname + '/images/large_icon.png',
         parent: mainWindow,     //親ウィンドウのBrowserWindowオブジェクト
-        modal: true,
         webPreferences: {
             nodeIntegration: true
         }
@@ -124,7 +140,11 @@ function showModalWindow() {
     })
 }
 
+
 function twitterOAuth() {
+    //コンシューマーキーとかは別ファイルに
+    //構造とかはたぶんどっかに書いてあります。
+    var consumer = require('./js/consumer_key.js')
 
     const dialog = require('electron').dialog;
 
@@ -134,16 +154,16 @@ function twitterOAuth() {
 
     const loginWindow = window.getFocusedWindow()
 
-    //loginWindow.webContents.send('token', 'hello World')
-
-    const twitter = new OauthTwitter({
+    let twitter = new OauthTwitter({
         key: consumer_key,
         secret: consumer_secret,
     });
 
+
+    //loginWindow.webContents.send('token', 'hello World')
+
     twitter.startRequest()
         .then((result) => {
-
             //それぞれ
             const token = result.oauth_access_token
             const token_secret = result.oauth_access_token_secret

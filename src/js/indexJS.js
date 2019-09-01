@@ -16,7 +16,7 @@ function setAccountWindow() {
 
     //閉じたとき
     childWindow.on('closed', function () {
-        childWindow = null
+        //childWindow = null
     })
 
 }
@@ -208,12 +208,16 @@ function filterStream() {
 }
 
 function addNotification(title) {
+    //時間
+    const date = new Date()
+    const hour = date.getHours()
+    const minute = date.getMinutes()
     const html = `
     
        <div class="col s12 m6">
             <div class="card light-blue lighten-1">
                 <div class="card-content white-text">
-                    <span class="card-title">${title}</span>
+                    <span class="card-title">${title}<br>${hour}:${minute}</span>
                     <p></p>
                 </div>
             </div>
