@@ -16,7 +16,7 @@
     "oauth-electron-twitter": "^1.0.48",
     "or": "^0.2.0",
     "twitter": "^1.7.1",
-    "yarn": "^1.17.3"
+    "yarn": "^1.22.0"
   },
   "dependencies": {
     "add": "^2.0.6",
@@ -24,7 +24,7 @@
     "oauth-electron-twitter": "^1.0.48",
     "or": "^0.2.0",
     "twitter": "^1.7.1",
-    "yarn": "^1.17.3"
+    "yarn": "^1.22.0"
   },
   "build": {
     "productName": "ニコ生アラート（青鳥）",
