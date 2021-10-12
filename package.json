@@ -9,7 +9,7 @@
   "author": "takusan_23",
   "license": "Apatch Licence 2.0",
   "devDependencies": {
-    "electron": "^6.0.3",
+    "electron": "^11.5.0",
     "electron-build": "0.0.3",
     "add": "^2.0.6",
     "electron-oauth-twitter": "^1.2.0",
